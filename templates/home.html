@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/images/logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Uber Fare Prediction </title>
+    <style>
+      /* Assurez-vous que le HTML et le body prennent toute la hauteur */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      .container {
+        flex: 1; /* Prend tout l'espace restant */
+      }
+      /* Style personnalisé pour la navbar (header) */
+      .navbar-custom {
+        background-color: #6c6b6b; /* Fond sombre */
+        height: 90px; /* Hauteur de la navbar */
+        z-index: 56600 !important; /* Priorité élevée pour le z-index */
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-nav .nav-link {
+        color: rgb(214, 214, 214); /* Texte blanc pour la navbar */
+      }
+
+      .navbar-custom .navbar-nav .nav-link:hover {
+        color: #f8f9fa; /* Couleur du texte au survol */
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-image: url('https://static.ride.guru/fare_finder_base/images/carousel/slide_blackcar.jpg');
+        background-size: cover; /* Pour couvrir toute la page */
+        background-position: center; /* Centrer l'image */
+        background-attachment: fixed; /* Fixer l'image lors du défilement */
+      }
+      .footer {
+        background-color: #6c6b6b; /* Vert */
+        color: white;              /* Couleur du texte */
+        text-align: center;        /* Centrer le texte */
+        padding: 20px;             /* Ajouter un peu de padding */
+        width: 100%;               /* Pleine largeur */
+      }
+
+
+      .caption {
+        text-align: center;
+        margin-top: 10%;
+        color: #fcc205; /* Texte blanc */
+      }
+
+      .caption h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .caption h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+    
+      
+      h1 {
+        margin-bottom: 40px;
+      }
+
+      label {
+        color: #333;
+      }
+
+      .btn-send, .btn-predict {
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        width: 80%;
+        margin-left: 3px;
+      }
+
+      .help-block.with-errors {
+        color: #ff5050;
+        margin-top: 5px;
+      }
+
+      .card {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .iris-image {
+        max-width: 80%; /* Adjusted the max-width for the image */
+        height: auto;
+        margin-bottom: 20px; /* Increased margin at the bottom of the image */
+      }
+
+      h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body >
+    <!-- Navbar personnalisée avec un fond sombre -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="/home">
+             <img src="https://static.ride.guru/uberfarefinder/images/logo.svg" alt="UberFareFinder" width="144px" height="100px"> 
+         </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+          <a class="nav-item nav-link" href="/Prediction.html">Prediction</a>
+          <a class="nav-item nav-link" href="https://github.com/kittupriyatham/Machine-Learning-Model-Deployment" target="_blank">Repository</a>
+          <a class="nav-item nav-link" href="/status.html" style="color:#F75353;"> <strong> Current Status </strong></a>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="caption">
+        <h2>Hailing an Uber?</h2>
+        <h1>Get your Uber Fare</h1>
+      </div>
+      <div class="text-center mt-5">
+        <!--
+        <h2>IRIS Classification</h2>
+        <p>Discover the fascinating world of iris flowers with our IRIS-C web application. Using cutting-edge machine learning models, this platform empowers you to predict the species of iris flowers based on their sepal and petal characteristics.</p>
+        <img src="static/images/iries.jpeg" alt="Iris Image" class="iris-image">
+        <h4>About IRIS Data</h4>
+        <p>The predictive magic begins with a dataset containing four features: sepal length, sepal width, petal length, and petal width. These measurements provide crucial insights into the unique attributes of iris flowers, forming the foundation for our machine learning algorithms.</p>
+        <h4>Classes of Iris Flowers</h4>
+        <p>Our models are trained to classify iris flowers into three distinct classes:</p>
+        <ol>
+          <li><strong>Setosa:</strong> Known for its distinctive appearance, the Setosa iris is characterized by its smaller size and unique petal shape.</li>
+          <li><strong>Versicolor:</strong> With moderate sepal and petal dimensions, the Versicolor iris displays a captivating blend of colors.</li>
+          <li><strong>Virginica:</strong> The Virginica iris, the largest of the three, boasts elongated sepals and petals, setting it apart with elegance.</li>
+        </ol> -->
+        <p style="color: rgb(4, 152, 244); font-size: 24px; font-weight: bold;"> Ready to Estimate your Uber Ride? Click below to start predicting!.</p>
+        <button class="btn btn-primary btn-predict" style= "background-color: #0994fe ; border-color: #ffffff; font-size: 20px;" onclick="window.location.href='/prediction'">Let's Predict</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; 2024-2025 ROUI ANAS & GUAROUAL OUMAIMA. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    -->  
+  </body>
+  
+</html>

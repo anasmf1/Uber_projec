@@ -1,0 +1,20 @@
+# Utiliser l'image officielle de Python 3.12 comme base
+FROM python:3.12.2-slim
+
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Copier le fichier requirements.txt dans le conteneur
+COPY requirements.txt .
+
+# Installer les dépendances définies dans requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier tous les fichiers locaux dans le conteneur (y compris app.py, model.pkl, et tous les autres fichiers nécessaires)
+COPY . .
+
+# Exposer le port 5000 pour que l'application Flask puisse l'écouter
+EXPOSE 5000
+
+# Définir la commande par défaut pour démarrer l'application
+CMD ["python", "app.py"]

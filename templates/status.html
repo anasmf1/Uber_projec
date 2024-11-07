@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/images/logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Uber Fare Prediction </title>
+    <style>
+      /* Assurez-vous que le HTML et le body prennent toute la hauteur */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      .container {
+        flex: 1; /* Prend tout l'espace restant */
+      }
+      /* Style personnalisé pour la navbar (header) */
+      .navbar-custom {
+        background-color: #6c6b6b; /* Fond sombre */
+        height: 90px; /* Hauteur de la navbar */
+        z-index: 56600 !important; /* Priorité élevée pour le z-index */
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-nav .nav-link {
+        color: rgb(214, 214, 214); /* Texte blanc pour la navbar */
+      }
+
+      .navbar-custom .navbar-nav .nav-link:hover {
+        color: #f8f9fa; /* Couleur du texte au survol */
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        
+      }
+      .footer {
+        background-color: #6c6b6b; /* Vert */
+        color: white;              /* Couleur du texte */
+        text-align: center;        /* Centrer le texte */
+        padding: 20px;             /* Ajouter un peu de padding */
+        width: 100%;               /* Pleine largeur */
+      }
+
+
+      .caption {
+        text-align: center;
+        margin-top: 10%;
+        color: #fcc205; /* Texte blanc */
+      }
+
+      .caption h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .caption h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+    
+      
+      h1 {
+        margin-bottom: 40px;
+      }
+
+      label {
+        color: #333;
+      }
+
+      .btn-send, .btn-predict {
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        width: 80%;
+        margin-left: 3px;
+      }
+
+      .help-block.with-errors {
+        color: #ff5050;
+        margin-top: 5px;
+      }
+
+      .card {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .iris-image {
+        max-width: 80%; /* Adjusted the max-width for the image */
+        height: auto;
+        margin-bottom: 20px; /* Increased margin at the bottom of the image */
+      }
+
+      h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+      .status-button {
+        background-color: #00c9fc; /* Vert */
+        color: white; /* Texte en blanc */
+        border: none; /* Pas de bordure */
+        padding: 10px 20px; /* Espacement interne */
+        text-align: center; /* Centrer le texte */
+        text-decoration: none; /* Pas de soulignement */
+        display: inline-block; /* Affichage en bloc */
+        font-size: 16px; /* Taille de la police */
+        margin: 4px 2px; /* Marge */
+        cursor: pointer; /* Curseur pointeur */
+        border-radius: 5px; /* Coins arrondis */
+        transition: background-color 0.3s; /* Animation de transition */
+      }
+      #test-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px; /* Optional: add padding around */
+}
+
+/* Styling for the content inside the #test div */
+#test {
+    text-align: center;
+    background-color: #fff;  /* Optional: for background color */
+    padding: 30px;            /* Add padding inside the block */
+    border-radius: 8px;       /* Optional: rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+}
+#testResult {
+    display: none;
+}
+    </style>
+  </head>
+
+  <body >
+    <!-- Navbar personnalisée avec un fond sombre -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="/home">
+             <img src="https://static.ride.guru/uberfarefinder/images/logo.svg" alt="UberFareFinder" width="144px" height="100px"> 
+         </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/home.html">Home</a>
+          <a class="nav-item nav-link" href="/Prediction.html">Prediction</a>
+          <a class="nav-item nav-link" href="https://github.com/kittupriyatham/Machine-Learning-Model-Deployment" target="_blank">Repository</a>
+          <a class="nav-item nav-link" href="/status.html" style="color:#F75353;"> <strong> Current Status </strong></a>
+
+        </div>
+      </div>
+    </nav>
+    <div id="test" class="content">
+        
+       
+        <button class="status-button" onclick="checkStatus()">Check statut</button>
+        <div id="testResult">
+          <svg class="text-icon-success" stroke-width="2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="90" width="90" version="1.1" fill="none" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+          </svg>
+          <h1 class="text-4xl text-center font-bold">
+            all systems are operational
+          </h1>
+      </div>
+    </div>
+<footer class="footer">
+    <p>&copy; 2024-2025 ROUI ANAS & GUAROUAL OUMAIMA. All Rights Reserved.</p>
+</footer>
+<script>
+  function checkStatus() {
+    fetch('/status')
+      .then(response => response.json())
+      .then(data => {
+        // Affiche le SVG et le message dans la div #testResult
+        document.getElementById('testResult').style.display = 'block';
+        document.getElementById('testResult').querySelector('h1').textContent = data.message;
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    -->
+    
+    <!-- JavaScript for button functionality 
+    <script>
+      function checkStatus() {
+        // Show the result and make it visible
+        document.getElementById('testResult').style.display = 'block';
+      }
+    </script> 
+    --> 
+  </body>
+  
+</html>

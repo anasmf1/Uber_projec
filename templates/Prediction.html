@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/images/logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Uber Fare Prediction </title>
+    <style>
+      /* Assurez-vous que le HTML et le body prennent toute la hauteur */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      .container {
+        flex: 1; /* Prend tout l'espace restant */
+      }
+      /* Style personnalisé pour la navbar (header) */
+      .navbar-custom {
+        background-color: #6c6b6b; /* Fond sombre */
+        height: 90px; /* Hauteur de la navbar */
+        z-index: 56600 !important; /* Priorité élevée pour le z-index */
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-nav .nav-link {
+        color: rgb(214, 214, 214); /* Texte blanc pour la navbar */
+      }
+
+      .navbar-custom .navbar-nav .nav-link:hover {
+        color: #f8f9fa; /* Couleur du texte au survol */
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-family: 'Lato', sans-serif
+      }
+      .footer {
+        background-color: #6c6b6b; /* Vert */
+        color: white;              /* Couleur du texte */
+        text-align: center;        /* Centrer le texte */
+        padding: 20px;             /* Ajouter un peu de padding */
+        width: 100%;               /* Pleine largeur */
+      }
+
+
+      .caption {
+        text-align: center;
+        margin-top: 10%;
+        color: #fcc205; /* Texte blanc */
+      }
+
+      .caption h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .caption h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+    
+      
+      h1 {
+        margin-bottom: 40px;
+      }
+
+      label {
+        color: #333;
+      }
+
+      .btn-send, .btn-predict {
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        width: 80%;
+        margin-left: 3px;
+      }
+
+      .help-block.with-errors {
+        color: #ff5050;
+        margin-top: 5px;
+      }
+
+      .card {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .iris-image {
+        max-width: 80%; /* Adjusted the max-width for the image */
+        height: auto;
+        margin-bottom: 20px; /* Increased margin at the bottom of the image */
+      }
+
+      h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body >
+    <!-- Navbar personnalisée avec un fond sombre -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="/home">
+             <img src="https://static.ride.guru/uberfarefinder/images/logo.svg" alt="UberFareFinder" width="144px" height="100px"> 
+         </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/home.html">Home</a>
+          <a class="nav-item nav-link" href="/Prediction.html">Prediction</a>
+          <a class="nav-item nav-link" href="https://github.com/kittupriyatham/Machine-Learning-Model-Deployment" target="_blank">Repository</a>
+          <a class="nav-item nav-link" href="/status.html" style="color:#F75353;"> <strong> Current Status </strong></a>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="container"> <div class=" text-center mt-5 ">
+        <h2>Uber Fare Prediction</h2>
+    </div>
+
+<div class="row ">
+    <div class="col-lg-7 mx-auto">
+        <div class="card mt-2 mx-auto p-4 bg-light">
+            <div class="card-body bg-light">
+                <div class="container">
+                    <form id="contact-form" role="form" action="/predict" method="post">
+                        <div class="controls">
+                            <!-- Passengers -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="PASS">The number of passengers</label>
+                                        <input id="PASS" type="number" name="passeng" class="form-control" placeholder="Please enter the number of passengers *" min="1" required="required" data-error="The number of passengers is required.">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Year">Year</label>
+                                        <select id="Year" name="ann" class="form-control" required="required" data-error="The Year is required.">
+                                            <option value="">Select Year</option>
+                                            <!-- Example years -->
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Month -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Month">Month</label>
+                                        <select id="Month" name="mois" class="form-control" required="required" data-error="The month is required.">
+                                            <option value="">Select Month</option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Day -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Day">Day</label>
+                                        <select id="Day" name="jour" class="form-control" required="required" data-error="The day is required.">
+                                            <option value="">Select Day</option>
+                                            <!-- Example days -->
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option value="23">23</option>
+                                            <option value="24">24</option>
+                                            <option value="25">25</option>
+                                            <option value="26">26</option>
+                                            <option value="27">27</option>
+                                            <option value="28">28</option>
+                                            <option value="29">29</option>
+                                            <option value="30">30</option>
+                                            <option value="31">31</option>
+                                            <!-- Add more days as needed -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hour -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hour">Hour</label>
+                                        <select id="hour" name="heure" class="form-control" required="required" data-error="The hour is required.">
+                                            <option value="">Select Hour</option>
+                                            <!-- Example hours from 0 to 23 -->
+                                            <option value="0">00:00</option>
+                                            <option value="1">01:00</option>
+                                            <option value="2">02:00</option>
+                                            <option value="3">03:00</option>
+                                            <option value="4">04:00</option>
+                                            <option value="5">05:00</option>
+                                            <option value="6">06:00</option>
+                                            <option value="7">07:00</option>
+                                            <option value="8">08:00</option>
+                                            <option value="9">09:00</option>
+                                            <option value="10">10:00</option>
+                                            <option value="11">11:00</option>
+                                            <option value="12">12:00</option>
+                                            <option value="13">13:00</option>
+                                            <option value="14">14:00</option>
+                                            <option value="15">15:00</option>
+                                            <option value="16">16:00</option>
+                                            <option value="17">17:00</option>
+                                            <option value="18">18:00</option>
+                                            <option value="19">19:00</option>
+                                            <option value="20">20:00</option>
+                                            <option value="21">21:00</option>
+                                            <option value="22">22:00</option>
+                                            <option value="23">23:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Distance -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="distance">Distance (in Km)</label>
+                                        <input id="distance" type="number" name="dist" class="form-control" placeholder="Please enter the distance in Km *" required="required" data-error="Distance is required." min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <p>
+                            <button type="button" class="btn btn-primary" onclick="getPrediction()">Predict Fare</button>
+                        </p>
+                        <!-- Champ pour afficher le résultat de la prédiction -->
+                         <div id="prediction-result" style="margin-top: 20px; font-size: 20px; font-weight: bold; color: #646664;">
+
+                        </div>
+
+                          
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024-2025 ROUI ANAS & GUAROUAL OUMAIMA. All Rights Reserved.</p>
+</footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    -->
+    <script>
+      function getPrediction() {
+        // Récupère les valeurs des champs du formulaire
+        const passenger_count = document.getElementById("PASS").value;
+        const year = document.getElementById("Year").value;
+        const month = document.getElementById("Month").value;
+        const day = document.getElementById("Day").value;
+        const hour = document.getElementById("hour").value;
+        const distance = document.getElementById("distance").value;
+    
+        // Envoi des données via AJAX à l'API Flask
+        fetch('/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            passenger_count: passenger_count,
+            year: year,
+            month: month,
+            day: day,
+            hour: hour,
+            distance: distance
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Affiche le résultat de la prédiction
+          document.getElementById("prediction-result").innerHTML = `Predicted Fare: $${data.prediction}`;
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    </script>      
+  </body>
+  
+</html>
